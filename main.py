@@ -18,7 +18,7 @@ def decorator(fnPtr):
 @decorator
 def generateRandomPointInsideGivenShape(geomPts, shape='triangle'):
     new_pt = []
-    if shape is 'triangle':
+    if shape is 'triangle' and len(geomPts) == 3:
         #need to find the barycentric coordinates of the triangle
         #for any point P = uA+vB+wC, where u,v,w are barycentric coordinates
         #varying from 0 to 1, and u+v+w = 1
@@ -46,11 +46,11 @@ def generateRandomPointInsideGivenShape(geomPts, shape='triangle'):
 
         yield(new_pt)
         
-    elif shape is 'quadrilateral':
+    elif shape is 'quadrilateral' and len(geomPts) == 4:
         #need to find the barycentric coordinates of the triangle
         #for any point P = uA+vB+wC+tD, where u,v,w,t are barycentric coordinates
         #and A,B,C,D are corners of quadrilateral
-        #varying from 0 to 1, and u+v+w = 1
+        #varying from 0 to 1, and u+v+w+t = 1
 
         #fixing v and w as random points (varies from 0 to 1
         #v = random.random()
