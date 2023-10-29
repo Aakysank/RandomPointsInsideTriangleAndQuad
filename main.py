@@ -52,12 +52,6 @@ def generateRandomPointInsideGivenShape(geomPts, shape='triangle'):
         #and A,B,C,D are corners of quadrilateral
         #varying from 0 to 1, and u+v+w+t = 1
 
-        #fixing v and w as random points (varies from 0 to 1
-        #v = random.random()
-        #w = random.random()
-
-        #u = 1-v-w
-
         ldha = random.random()
         mu = random.random()
 
