@@ -20,33 +20,7 @@ def decorator(fnPtr):
 def generateRandomPointInsideGivenShape(geomPts, shape='triangle'):
     new_pt = []
     if shape == 'triangle' and len(geomPts) == 3:
-        #need to find the barycentric coordinates of the triangle
-        #for any point P = uA+vB+wC, where u,v,w are barycentric coordinates
-        #varying from 0 to 1, and u+v+w = 1
-        
-        #fixing v and w as random points (varies from 0 to 1
-        v = random.random()
-        w = random.random()
-
-        u = 1-v-w
-
-
-        #if this condition satisfies, that means the point is outside the triangle
-        #if the point found is outside the triangle, then scale the v and w by half
-        #and recompute u.
-        if v >= 0.0 and w >= 0.0 and v+w >= 1.0:
-            if v > 0.5:
-                v *=0.5
-            if w > 0.5:
-                w *=0.5
-
-            u = 1-v-w
-
-        for pts in zip(*geomPts):
-            new_pt.append(((pts[0]*u) + (pts[1]*v) + (pts[2]*w)))
-
-        yield(new_pt)
-        
+        yield(getRandomPointOnTriangle(geomPts))      
     elif shape == 'quadrilateral' and len(geomPts) == 4:
         #need to find the barycentric coordinates of the triangle
         #for any point P = uA+vB+wC+tD, where u,v,w,t are barycentric coordinates
@@ -109,6 +83,31 @@ def anglebetweenLines(pt1,pt2,pt3,pt4):
 
     return theta_deg
 
+def getRandomPointOnTriangle(geomPts):
+    #need to find the barycentric coordinates of the triangle
+    #for any point P = uA+vB+wC, where u,v,w are barycentric coordinates
+    #varying from 0 to 1, and u+v+w = 1
+    
+    #fixing v and w as random points (varies from 0 to 1
+    v = random.random()
+    w = random.random()
+
+    u = 1-v-w
+
+    #if this condition satisfies, that means the point is outside the triangle
+    #if the point found is outside the triangle, then scale the v and w by half
+    #and recompute u.
+    if v >= 0.0 and w >= 0.0 and v+w >= 1.0:
+        if v > 0.5:
+            v *=0.5
+        if w > 0.5:
+            w *=0.5
+
+        u = 1-v-w
+
+    for pts in zip(*geomPts):
+        new_pt.append(((pts[0]*u) + (pts[1]*v) + (pts[2]*w)))
+    
 #testing the code
 #triangle
 triangle_pt1 = [-0.75,0,1]
